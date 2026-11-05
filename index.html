@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Culture & Exam Prep Hub (M.6 Unit 5)</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind Config for Custom Styling -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Sarabun', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f5ff',
+              100: '#e0ebff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 4s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* 3D Flip Card Effect */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/20">
+          U5
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold bg-gradient-to-r from-indigo-300 via-purple-200 to-pink-300 bg-clip-text text-transparent">
+            Global Culture & Exam Prep Hub
+          </h1>
+          <p class="text-xs text-slate-400">
+            M.6 English Unit 5 (New Frontiers 6) • TGAT1 & A-Level Practice
+          </p>
+        </div>
+      </div>
+
+      <!-- User Progress & Sound Toggle -->
+      <div class="flex items-center space-x-4">
+        <!-- Mastery Counter -->
+        <div class="hidden sm:flex items-center space-x-2 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+          <span class="text-xs text-slate-400">Vocab Mastered:</span>
+          <span id="mastered-count" class="text-xs font-bold text-emerald-400">0 / 38</span>
+          <div class="w-16 bg-slate-700 h-2 rounded-full overflow-hidden">
+            <div id="mastered-bar" class="bg-emerald-400 h-full w-0 transition-all duration-500"></div>
+          </div>
+        </div>
+
+        <!-- Audio SFX Toggle -->
+        <button id="sfx-toggle" onclick="toggleSFX()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-medium text-slate-300 flex items-center space-x-2 transition">
+          <span id="sfx-icon">🔊</span>
+          <span id="sfx-text" class="hidden md:inline">Sound ON</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- MAIN NAVIGATION TABS -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex space-x-1 overflow-x-auto no-scrollbar py-2 border-t border-slate-800/60" aria-label="Tabs">
+        <button onclick="switchTab('vocab')" id="tab-btn-vocab" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-2 whitespace-nowrap transition-all duration-200 bg-indigo-600 text-white shadow-lg shadow-indigo-600/30">
+          <span>🎴</span>
+          <span>Flashcard Bank</span>
+          <span id="badge-vocab" class="ml-1.5 px-2 py-0.5 text-[10px] rounded-full bg-indigo-950 text-indigo-200">38</span>
+        </button>
+
+        <button onclick="switchTab('grammar')" id="tab-btn-grammar" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-2 whitespace-nowrap transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+          <span>⚡</span>
+          <span>Grammar Arena</span>
+          <span class="px-2 py-0.5 text-[10px] rounded-full bg-purple-950 text-purple-200 border border-purple-800/50">Core</span>
+        </button>
+
+        <button onclick="switchTab('reading')" id="tab-btn-reading" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-2 whitespace-nowrap transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+          <span>📖</span>
+          <span>Reading Passage</span>
+        </button>
+
+        <button onclick="switchTab('exam')" id="tab-btn-exam" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-2 whitespace-nowrap transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+          <span>🎯</span>
+          <span>Exam Simulator</span>
+          <span class="px-2 py-0.5 text-[10px] rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/50">TGAT / A-Level</span>
+        </button>
+
+        <button onclick="switchTab('writing')" id="tab-btn-writing" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold flex items-center space-x-2 whitespace-nowrap transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-800/60">
+          <span>✍️</span>
+          <span>Writing Studio</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- Notification Banner Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- MODULE 1: VOCABULARY & IDIOMS FLASHCARDS -->
+    <section id="mod-vocab" class="tab-content block space-y-6">
+      <!-- Controls Header -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 flex flex-col md:flex-row gap-4 items-center justify-between shadow-lg">
+        <!-- Search -->
+        <div class="relative w-full md:w-64">
+          <input type="text" id="vocab-search" oninput="filterVocab()" placeholder="Search word, meaning, Thai..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+          <span class="absolute right-3 top-2.5 text-slate-500 text-xs">🔍</span>
+        </div>
+
+        <!-- CEFR & Category Filters -->
+        <div class="flex flex-col sm:flex-row flex-wrap gap-2 w-full md:w-auto justify-start md:justify-end items-center">
+          <!-- CEFR Filter Buttons -->
+          <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+            <span class="text-[10px] font-bold text-slate-400 px-2 uppercase">CEFR:</span>
+            <button onclick="setCefrFilter('all')" class="cefr-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white transition" data-cefr="all">All</button>
+            <button onclick="setCefrFilter('B1')" class="cefr-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cefr="B1">B1</button>
+            <button onclick="setCefrFilter('B2')" class="cefr-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cefr="B2">B2</button>
+            <button onclick="setCefrFilter('C1')" class="cefr-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cefr="C1">C1</button>
+          </div>
+
+          <!-- Category Filters -->
+          <div class="flex flex-wrap gap-1">
+            <button onclick="setVocabCategory('all')" class="v-cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white transition" data-cat="all">All (38)</button>
+            <button onclick="setVocabCategory('listening')" class="v-cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cat="listening">Listening</button>
+            <button onclick="setVocabCategory('speaking')" class="v-cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cat="speaking">Speaking</button>
+            <button onclick="setVocabCategory('idiom')" class="v-cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cat="idiom">Idioms</button>
+            <button onclick="setVocabCategory('reading')" class="v-cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cat="reading">Reading</button>
+            <button onclick="setVocabCategory('writing')" class="v-cat-btn px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-400 hover:bg-slate-700 transition" data-cat="writing">Writing</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Flashcard Section -->
+      <div class="max-w-xl mx-auto">
+        <div class="perspective-1000 w-full h-80 sm:h-96">
+          <div id="flashcard" onclick="flipCard()" class="transform-style-3d relative w-full h-full cursor-pointer transition-transform duration-500 rounded-3xl shadow-2xl border border-slate-800 bg-slate-900 group">
+            
+            <!-- FRONT SIDE -->
+            <div class="backface-hidden absolute inset-0 w-full h-full rounded-3xl p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <span id="fc-category" class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-indigo-950 text-indigo-300 border border-indigo-800/50">Listening</span>
+                  <!-- CEFR Level Badge Tag -->
+                  <span id="fc-cefr" class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-sky-950 text-sky-300 border border-sky-800/50">B2</span>
+                </div>
+                <button onclick="event.stopPropagation(); speakCurrentWord();" class="p-2.5 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-300 hover:text-white transition shadow-md" title="Pronounce word">
+                  🔊
+                </button>
+              </div>
+
+              <div class="text-center my-auto space-y-2">
+                <h2 id="fc-word" class="text-3xl sm:text-4xl font-black tracking-tight text-white group-hover:scale-105 transition-transform duration-300">
+                  concept
+                </h2>
+                <div class="flex items-center justify-center space-x-2 text-slate-400 text-sm font-mono">
+                  <span id="fc-pos" class="italic text-indigo-400">n.</span>
+                  <span id="fc-ipa">/ˈkɒnsept/</span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-xs text-slate-500 pt-4 border-t border-slate-800/60">
+                <span>Click card to flip 🔄</span>
+                <span id="fc-counter" class="font-semibold text-indigo-400">1 / 38</span>
+              </div>
+            </div>
+
+            <!-- BACK SIDE -->
+            <div class="backface-hidden rotate-y-180 absolute inset-0 w-full h-full rounded-3xl p-6 sm:p-8 flex flex-col justify-between bg-gradient-to-b from-slate-900 via-slate-950 to-indigo-950/40 border border-indigo-500/30">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span id="fc-back-thai" class="text-xl font-bold text-indigo-300">แนวคิด, มโนทัศน์</span>
+                  <button id="fc-master-btn" onclick="event.stopPropagation(); toggleMasteredCurrent();" class="px-3 py-1 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-emerald-600 text-slate-300 hover:text-white transition border border-slate-700">
+                    ✓ Mark Mastered
+                  </button>
+                </div>
+                
+                <p id="fc-back-def" class="text-sm text-slate-300 leading-relaxed font-normal mb-3">
+                  An idea about a particular subject or topic.
+                </p>
+
+                <!-- TGAT / A-Level Synonym Note -->
+                <div class="bg-indigo-950/60 border border-indigo-800/40 rounded-xl p-3 mb-3">
+                  <div class="text-[11px] font-bold text-indigo-400 uppercase tracking-wider mb-1">TGAT / A-Level Synonyms:</div>
+                  <div id="fc-back-syn" class="text-xs text-indigo-200 font-mono">notion, idea, principle, theory</div>
+                </div>
+
+                <!-- Example Sentence -->
+                <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-3">
+                  <div class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-1">Example:</div>
+                  <p id="fc-back-ex" class="text-xs text-slate-300 italic">
+                    "The concept of culture varies greatly across different continents."
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-800/60">
+                <span>Click card to return 🔄</span>
+                <span class="text-slate-400">Unit 5 Vocabulary</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Controls Nav Buttons -->
+        <div class="flex items-center justify-between mt-6">
+          <button onclick="prevCard()" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-200 font-semibold text-xs sm:text-sm flex items-center space-x-2 transition shadow-md">
+            <span>← Previous</span>
+          </button>
+          
+          <button onclick="shuffleCards()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-semibold transition" title="Shuffle Deck">
+            🔀 Shuffle
+          </button>
+
+          <button onclick="nextCard()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm flex items-center space-x-2 transition shadow-lg shadow-indigo-600/30">
+            <span>Next →</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Vocab Directory Grid -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg mt-8">
+        <h3 class="text-base font-bold text-slate-200 mb-4 flex items-center justify-between">
+          <span>📚 Unit 5 Vocabulary & Idioms Directory</span>
+          <span class="text-xs font-normal text-slate-400">Click any card to load</span>
+        </h3>
+        <div id="vocab-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 max-h-80 overflow-y-auto pr-2">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULE 2: GRAMMAR ARENA -->
+    <section id="mod-grammar" class="tab-content hidden space-y-6">
+      
+      <!-- Sub Nav for Grammar Topics -->
+      <div class="flex border-b border-slate-800 space-x-4">
+        <button onclick="switchGrammarTab('discourse')" id="g-sub-discourse" class="pb-3 text-sm font-bold border-b-2 border-indigo-500 text-indigo-400 transition">
+          1. Discourse Markers (ตัวเชื่อมความ)
+        </button>
+        <button onclick="switchGrammarTab('bare')" id="g-sub-bare" class="pb-3 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition">
+          2. Bare Infinitives (กริยาไม่เติม to)
+        </button>
+      </div>
+
+      <!-- GRAMMAR TAB 1: DISCOURSE MARKERS -->
+      <div id="g-content-discourse" class="space-y-6">
+        <!-- Theory Card -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-800/40 rounded-2xl p-5 sm:p-6 shadow-xl">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="px-2.5 py-1 bg-indigo-900 text-indigo-200 text-xs font-bold rounded-md">TGAT1 & A-Level Focus</span>
+            <h3 class="text-lg font-bold text-white">Discourse Markers Rules & Categories</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+            Discourse markers are words or phrases used to organize speech or writing, connect ideas, or guide the reader.
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-emerald-400 block mb-1">➕ Addition (เพิ่มเติม)</span>
+              <p class="text-xs text-slate-200 font-medium">also, furthermore, in addition</p>
+              <p class="text-[11px] text-slate-500 mt-1 italic">"In addition, you can choose the movie."</p>
+            </div>
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-rose-400 block mb-1">⚡ Contrast (ขัดแย้ง)</span>
+              <p class="text-xs text-slate-200 font-medium">however, but, although, on the other hand</p>
+              <p class="text-[11px] text-slate-500 mt-1 italic">"However, do not use the phone."</p>
+            </div>
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-sky-400 block mb-1">💡 Explanation (อธิบาย)</span>
+              <p class="text-xs text-slate-200 font-medium">in other words, that is to say</p>
+              <p class="text-[11px] text-slate-500 mt-1 italic">"In other words, he likes simplicity."</p>
+            </div>
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-amber-400 block mb-1">🔄 Topic Change (เปลี่ยนเรื่อง)</span>
+              <p class="text-xs text-slate-200 font-medium">by the way, anyway, now, moving on</p>
+              <p class="text-[11px] text-slate-500 mt-1 italic">"By the way, have you seen the rules?"</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Quiz Section -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg">
+          <h4 class="text-base font-bold text-slate-100 mb-4 flex items-center justify-between">
+            <span>✏️ Discourse Markers Interactive Practice</span>
+            <span class="text-xs font-mono text-indigo-400">Slide 21 Textbook Exercises</span>
+          </h4>
+          
+          <div id="quiz-discourse-list" class="space-y-4">
+            <!-- Dynamically Rendered Quiz Questions -->
+          </div>
+        </div>
+      </div>
+
+      <!-- GRAMMAR TAB 2: BARE INFINITIVES -->
+      <div id="g-content-bare" class="space-y-6 hidden">
+        <!-- Theory Card -->
+        <div class="bg-gradient-to-r from-slate-900 via-purple-950/40 to-slate-900 border border-purple-800/40 rounded-2xl p-5 sm:p-6 shadow-xl">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="px-2.5 py-1 bg-purple-900 text-purple-200 text-xs font-bold rounded-md">Grammar Core Rule</span>
+            <h3 class="text-lg font-bold text-white">Bare Infinitives (V.1 ไม่เติม to / -ing / -ed)</h3>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+            A bare infinitive is the base form of a verb without "to". In English grammar (and TGAT/A-Level error identification), bare infinitives MUST be used in 4 major structures:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-purple-400 block mb-1">1. Modal Verbs</span>
+              <p class="text-xs text-slate-300">can, could, will, would, shall, should, may, might, must</p>
+              <p class="text-[11px] text-slate-400 mt-2 font-mono">You should <span class="text-emerald-400 font-bold">study</span> more.</p>
+            </div>
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-purple-400 block mb-1">2. Causative Verbs</span>
+              <p class="text-xs text-slate-300">make, let, help</p>
+              <p class="text-[11px] text-slate-400 mt-2 font-mono">They made me <span class="text-emerald-400 font-bold">wait</span> outside.</p>
+            </div>
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-purple-400 block mb-1">3. Perception Verbs</span>
+              <p class="text-xs text-slate-300">see, hear, feel, watch, notice</p>
+              <p class="text-[11px] text-slate-400 mt-2 font-mono">I saw him <span class="text-emerald-400 font-bold">run</span> down the street.</p>
+            </div>
+            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <span class="text-xs font-bold text-purple-400 block mb-1">4. Fixed Expressions</span>
+              <p class="text-xs text-slate-300">had better, would rather</p>
+              <p class="text-[11px] text-slate-400 mt-2 font-mono">You had better <span class="text-emerald-400 font-bold">take</span> off shoes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice Section -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-lg">
+          <h4 class="text-base font-bold text-slate-100 mb-4 flex items-center justify-between">
+            <span>✏️ Bare Infinitives Interactive Drill</span>
+            <span class="text-xs font-mono text-purple-400">Slide 23 Textbook Exercises</span>
+          </h4>
+          
+          <div id="quiz-bare-list" class="space-y-4">
+            <!-- Dynamically Rendered -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MODULE 3: READING PASSAGE & COMPREHENSION -->
+    <section id="mod-reading" class="tab-content hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left 7 Cols: Passage Text -->
+        <div class="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800 mb-4">
+              <div>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-indigo-950 text-indigo-300 border border-indigo-800/50">Unit 5 Reading • p. 65</span>
+                <h3 class="text-xl font-black text-white mt-1">Fitting into a New Culture</h3>
+              </div>
+              <button onclick="speakReadingPassage()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600 text-xs font-medium text-slate-300 hover:text-white transition flex items-center space-x-1.5">
+                <span>🔊</span>
+                <span>Listen Audio</span>
+              </button>
+            </div>
+
+            <!-- Hint -->
+            <div class="bg-slate-950/70 border border-slate-800/80 rounded-xl p-3 mb-4 text-xs text-slate-400 flex items-center space-x-2">
+              <span class="text-base">💡</span>
+              <span><strong>Interactive Feature:</strong> Click on any highlighted cyan word to view its vocabulary definition and Thai translation instantly!</span>
+            </div>
+
+            <!-- Passage Content -->
+            <div id="reading-text-body" class="text-slate-300 text-sm sm:text-base leading-relaxed space-y-4 font-normal">
+              <p>
+                When I first arrived in America, I was pretty <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="reserved">reserved</span>. I couldn't help but wonder if I'd fit in. One of the first things I noticed was the number of different languages, <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="accent">accents</span>, styles, and expressions. It made me realize how <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="diverse">diverse</span> this country is. That diversity makes each day a learning opportunity. It's one of the most fascinating <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="aspect">aspects</span> of living here.
+              </p>
+              <p>
+                Aside from generally being <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="outgoing">outgoing</span>, American students are involved in lots of activities. It feels like there's a club for everything! A few weeks into the semester, our school hosted a club showcase on <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="campus">campus</span>. The digital media club booth caught my eye. They had colorful posters, cameras, and a green screen set up. I imagined how fun it would be to learn video editing or voice acting. I picked up the sign-up sheet but <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="pause">paused</span>. Suddenly, I felt a wave of uncertainty. I barely knew anything about video production. I started to feel <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="overwhelm">overwhelmed</span>. What if I wasn't good enough? What if there was another club better suited for me?
+              </p>
+              <p>
+                That's when someone approached me with the warmest smile. She said, "Konnichiwa!"—that's "hello" in Japanese. It instantly reminded me of home, and I smiled back. Her name was Amber, and she was the president of the digital media club. She had spent two years studying abroad in Osaka and knew exactly how it felt to be dropped into a new culture. "<span class="rd-word cursor-pointer underline decoration-amber-400 decoration-2 text-amber-300 font-medium hover:bg-amber-950/50 px-1 rounded transition" data-word="When in Rome, do as the Romans do">When in Rome, do as the Romans do</span>," she told me as we sat down together at a café later that afternoon. I blinked. "So... does that mean I should act like everyone else?" Amber nodded. "Kind of. It means being open to the way things are done here... you know, giving things a try, even if they're <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="unfamiliar">unfamiliar</span>."
+              </p>
+              <p>
+                I thought for a moment. It didn't mean losing my <span class="rd-word cursor-pointer underline decoration-cyan-400 decoration-2 text-cyan-300 font-medium hover:bg-cyan-950/50 px-1 rounded transition" data-word="identity">identity</span>; it meant adapting and maybe even discovering new parts of myself along the way. That lunch turned into a long conversation. We talked about how complicated and beautiful living in another culture can be. Amber told me stories about her time in Japan, like how she got <span class="rd-word cursor-pointer underline decoration-amber-400 decoration-2 text-amber-300 font-medium hover:bg-amber-950/50 px-1 rounded transition" data-word="lost in translation">lost in translation</span> in a rural town because she misunderstood a train schedule. We laughed a lot.
+              </p>
+              <p>
+                As we walked back across campus, I realized something: I didn't need to have everything figured out. Being part of a diverse community meant that others were figuring things out, too. Joining the club could help me grow into someone more confident, expressive, and outgoing. So, I signed up, and I'm really enjoying it!
+              </p>
+            </div>
+          </div>
+
+          <!-- Vocab Definition Modal / Popup Drawer inside reading pane -->
+          <div id="reading-vocab-modal" class="hidden mt-6 bg-slate-950 border border-cyan-500/40 rounded-xl p-4 transition-all">
+            <div class="flex items-center justify-between mb-1">
+              <div class="flex items-center space-x-2">
+                <span id="rd-modal-word" class="text-base font-bold text-cyan-300">reserved</span>
+                <span id="rd-modal-cefr" class="px-2 py-0.5 text-[10px] font-black rounded bg-sky-950 text-sky-300 border border-sky-800/50">B2</span>
+              </div>
+              <button onclick="closeReadingVocabModal()" class="text-xs text-slate-500 hover:text-slate-300">✕ Close</button>
+            </div>
+            <div id="rd-modal-thai" class="text-xs font-bold text-indigo-300 mb-1">สงบเสงี่ยม, เก็บตัว</div>
+            <p id="rd-modal-def" class="text-xs text-slate-300 italic">Slow to reveal emotion or opinions; shy.</p>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Comprehension Quiz -->
+        <div class="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
+          <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+            <h3 class="text-base font-bold text-white">📝 Comprehension & Inference Quiz</h3>
+            <span class="text-xs text-slate-400">5 Questions</span>
+          </div>
+
+          <div id="reading-quiz-container" class="space-y-4">
+            <!-- Dynamically populates reading comprehension questions -->
+          </div>
+
+          <button onclick="checkReadingQuiz()" class="w-full py-3 bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/30 transition">
+            Check Reading Quiz Answers
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODULE 4: TGAT1 & A-LEVEL EXAM SIMULATOR -->
+    <section id="mod-exam" class="tab-content hidden space-y-6">
+      
+      <!-- Exam Intro Banner / Active Bar -->
+      <div class="bg-gradient-to-r from-slate-900 via-emerald-950/40 to-slate-900 border border-emerald-800/40 rounded-2xl p-5 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-950 text-emerald-300 border border-emerald-800/50">Simulated Entrance Exam</span>
+          <h3 class="text-lg font-black text-white mt-1">TGAT1 Communication & A-Level English Mock Test</h3>
+          <p class="text-xs text-slate-400">10 High-Yield Questions • Vocabulary in Context, Expressions & Grammar Rules</p>
+        </div>
+
+        <div class="flex items-center space-x-3 bg-slate-950/80 px-4 py-2.5 rounded-xl border border-slate-800">
+          <span class="text-xs text-slate-400 font-medium">Time Remaining:</span>
+          <span id="exam-timer" class="text-lg font-mono font-bold text-emerald-400">10:00</span>
+          <button id="exam-start-btn" onclick="startExamTimer()" class="ml-2 px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white rounded-lg transition">Start</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Question Palette / Navigator -->
+        <div class="lg:col-span-3 bg-slate-900 border border-slate-800 rounded-2xl p-4 shadow-lg space-y-4 h-fit">
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Question Navigator</h4>
+          <div id="exam-nav-grid" class="grid grid-cols-5 gap-2">
+            <!-- 10 Question Pills -->
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-xs space-y-1.5 text-slate-400">
+            <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-slate-800 border border-slate-700"></span><span>Unanswered</span></div>
+            <div class="flex items-center space-x-2"><span class="w-3 h-3 rounded-full bg-indigo-600"></span><span>Answered</span></div>
+          </div>
+
+          <button onclick="submitExam()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl shadow-lg transition">
+            Submit Exam Paper
+          </button>
+        </div>
+
+        <!-- Question Viewport -->
+        <div class="lg:col-span-9 bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+          <div id="exam-question-card">
+            <!-- Single Question Rendered Here -->
+          </div>
+
+          <div class="flex items-center justify-between pt-4 border-t border-slate-800">
+            <button onclick="prevExamQ()" id="exam-prev-btn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">← Previous</button>
+            <span id="exam-q-indicator" class="text-xs font-mono text-slate-400">Question 1 of 10</span>
+            <button onclick="nextExamQ()" id="exam-next-btn" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Modal Breakdown -->
+      <div id="exam-result-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+          <div class="text-center space-y-2">
+            <span class="text-4xl">🏆</span>
+            <h3 class="text-2xl font-black text-white">Exam Result Breakdown</h3>
+            <p class="text-xs text-slate-400">TGAT1 / A-Level Standard Evaluation</p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+              <span class="text-xs text-slate-500 block">Total Score</span>
+              <span id="res-score" class="text-2xl font-black text-emerald-400">0/10</span>
+            </div>
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+              <span class="text-xs text-slate-500 block">Percentage</span>
+              <span id="res-percent" class="text-2xl font-black text-indigo-400">0%</span>
+            </div>
+            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800">
+              <span class="text-xs text-slate-500 block">Estimated TGAT Level</span>
+              <span id="res-level" class="text-sm font-bold text-purple-300 mt-1 block">Good</span>
+            </div>
+          </div>
+
+          <!-- Answer Key Explanations -->
+          <div class="space-y-3">
+            <h4 class="text-sm font-bold text-slate-200">Detailed Explanations & Thai Keys:</h4>
+            <div id="exam-explanations-list" class="space-y-3 max-h-60 overflow-y-auto pr-2">
+              <!-- Explanations populating -->
+            </div>
+          </div>
+
+          <button onclick="closeExamResultModal()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl transition">
+            Close & Review Answers
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MODULE 5: INTERACTIVE WRITING STUDIO -->
+    <section id="mod-writing" class="tab-content hidden space-y-6">
+      
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-purple-950 text-purple-300 border border-purple-800/50">Unit 5 Project Task • p. 67-68</span>
+            <h3 class="text-xl font-black text-white mt-1">Cultural Advice Guide Builder (Dos & Don'ts)</h3>
+          </div>
+          <button onclick="copyWritingOutput()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl transition flex items-center space-x-1.5 shadow-md">
+            <span>📋</span>
+            <span>Copy Completed Guide</span>
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Write a guide giving cultural advice for visiting Thailand or a fictional world. To score full points in TGAT/A-Level writing, your paragraph must naturally incorporate <strong>Discourse Markers</strong> (e.g. <em>In addition, However</em>) and <strong>Bare Infinitives</strong> (e.g. <em>must remove, make them feel, had better ask</em>).
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-2">
+          
+          <!-- Guided Inputs (7 cols) -->
+          <div class="lg:col-span-7 space-y-4">
+            
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">Country / World Name:</label>
+              <input type="text" id="w-country" oninput="updateWritingPreview()" value="Thailand" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-emerald-400 mb-1">Do #1 (Custom / Etiquette):</label>
+                <input type="text" id="w-do1" oninput="updateWritingPreview()" value="You must remove your shoes before entering someone's home." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-emerald-400 mb-1">Do #2 (Behavior):</label>
+                <input type="text" id="w-do2" oninput="updateWritingPreview()" value="In addition, you had better greet elders with a respectful wai." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-rose-400 mb-1">Don't #1 (Taboo):</label>
+                <input type="text" id="w-dont1" oninput="updateWritingPreview()" value="However, you must not touch anyone's head as it is sacred." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-rose-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-rose-400 mb-1">Don't #2 (Dining):</label>
+                <input type="text" id="w-dont2" oninput="updateWritingPreview()" value="In other words, avoid sticking chopsticks upright into your rice bowl." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-rose-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-indigo-300 mb-1">General Advice Paragraph:</label>
+              <textarea id="w-paragraph" oninput="updateWritingPreview()" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-slate-100 focus:outline-none focus:border-indigo-500">When visiting Thailand, adjusting to local manners makes everyone smile. Furthermore, local people will let you enjoy your trip if you show respect.</textarea>
+            </div>
+
+          </div>
+
+          <!-- Real-Time Validation & Preview (5 cols) -->
+          <div class="lg:col-span-5 space-y-4">
+            
+            <!-- Real-time Checker -->
+            <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3">
+              <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Grammar Validation Checklist</h4>
+              <div class="space-y-2 text-xs">
+                <div id="chk-dm" class="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400">
+                  <span>Discourse Markers (e.g. <em>In addition, However, Furthermore</em>)</span>
+                  <span id="chk-dm-icon">❌</span>
+                </div>
+                <div id="chk-bare" class="flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400">
+                  <span>Bare Infinitives (e.g. <em>must remove, let you, had better</em>)</span>
+                  <span id="chk-bare-icon">❌</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formatted Card Preview -->
+            <div class="bg-gradient-to-br from-indigo-950/60 via-slate-950 to-purple-950/60 border border-indigo-500/30 rounded-2xl p-5 space-y-3 shadow-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono text-indigo-400 uppercase">Live Preview</span>
+                <span class="text-xs">📜</span>
+              </div>
+              <h4 id="prev-title" class="text-base font-bold text-white border-b border-slate-800 pb-2">
+                A Traveler's Guide to Thailand
+              </h4>
+              <div id="prev-body" class="text-xs text-slate-300 space-y-2 leading-relaxed">
+                <!-- Live preview text -->
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // ==========================================
+    // 1. DATA STRUCTURES (UNIT 5 SLIDES CONTENT WITH CEFR)
+    // ==========================================
+
+    const VOCAB_DATA = [
+      // Listening (p. 60)
+      { id: 1, word: "concept", ipa: "/ˈkɒnsept/", pos: "n.", category: "listening", cefr: "B2", thai: "แนวคิด, มโนทัศน์", def: "An idea about a particular subject or topic.", ex: "The concept of table manners varies significantly across cultures.", syn: "notion, idea, principle, theory" },
+      { id: 2, word: "exceptional", ipa: "/ɪkˈsepʃənl/", pos: "adj.", category: "listening", cefr: "C1", thai: "โดดเด่น, ยอดเยี่ยมเป็นพิเศษ", def: "Very good; standing out among the best.", ex: "The entertainment here is exceptional; it makes everyone smile.", syn: "extraordinary, outstanding, superb, remarkable" },
+      { id: 3, word: "familiar", ipa: "/fəˈmɪliər/", pos: "adj.", category: "listening", cefr: "B1", thai: "คุ้นเคย, เป็นที่รู้จักดี", def: "Frequently seen, heard, or experienced.", ex: "I was glad to see a familiar face when I arrived at the school.", syn: "accustomed, well-known, recognizable" },
+      { id: 4, word: "unfamiliar", ipa: "/ˌʌnfəˈmɪliər/", pos: "adj.", category: "listening", cefr: "B2", thai: "ไม่คุ้นเคย, แปลกหน้า", def: "Not known or experienced before.", ex: "It can be scary to navigate an unfamiliar public transit system.", syn: "strange, alien, novel, unknown" },
+      { id: 5, word: "manners", ipa: "/ˈmænəz/", pos: "n.", category: "listening", cefr: "B2", thai: "มารยาท, สมบัติผู้ดี", def: "A set of behaviors done because they are considered polite.", ex: "In Japan, slurping noodles shows good manners and enjoyment.", syn: "etiquette, decorum, protocol, politeness" },
+      { id: 6, word: "obey", ipa: "/əˈbeɪ/", pos: "v.", category: "listening", cefr: "B2", thai: "เชื่อฟัง, ปฏิบัติตามกฎ", def: "To listen to and follow rules or instructions.", ex: "All citizens are expected to obey public transportation rules.", syn: "comply with, abide by, follow, observe" },
+      { id: 7, word: "disobey", ipa: "/ˌdɪsəˈbeɪ/", pos: "v.", category: "listening", cefr: "B2", thai: "ขัดขืน, ไม่ปฏิบัติตามกฎ", def: "To refuse to follow rules or instructions.", ex: "If you disobey the law against littering, you will be fined.", syn: "defy, breach, violate, infringe" },
+      { id: 8, word: "peculiar", ipa: "/pɪˈkjuːliər/", pos: "adj.", category: "listening", cefr: "C1", thai: "แปลกประหลาด, พิสดาร", def: "Odd and unusual, sometimes used in a negative way.", ex: "She noticed a peculiar custom that she had never seen before.", syn: "bizarre, eccentric, strange, weird" },
+      { id: 9, word: "strict", ipa: "/strɪkt/", pos: "adj.", category: "listening", cefr: "B2", thai: "เข้มงวด, เคร่งครัด", def: "Always behaving in a specific way due to beliefs or rules.", ex: "Singapore has strict rules regarding cleanliness and public order.", syn: "rigorous, stringent, stern, firm" },
+      { id: 10, word: "vary", ipa: "/ˈveəri/", pos: "v.", category: "listening", cefr: "B2", thai: "แตกต่าง, แปรผัน", def: "To differ from something of a similar type.", ex: "Dining customs vary greatly from one country to another.", syn: "differ, fluctuate, alter, diverge" },
+
+      // Speaking (p. 62)
+      { id: 11, word: "accent", ipa: "/ˈæksənt/", pos: "n.", category: "speaking", cefr: "B2", thai: "สำเนียงการพูด", def: "A distinctive pronunciation of a language by a country or region.", ex: "She noticed a slight British accent in her professor's speech.", syn: "brogue, pronunciation, intonation" },
+      { id: 12, word: "criticize", ipa: "/ˈkrɪtɪsaɪz/", pos: "v.", category: "speaking", cefr: "B2", thai: "วิพากษ์วิจารณ์, ติเตียน", def: "To express disapproval of someone or something.", ex: "Try to be respectful even if you need to criticize someone's idea.", syn: "censure, condemn, fault, reprimand" },
+      { id: 13, word: "frustrating", ipa: "/frʌˈstreɪtɪŋ/", pos: "adj.", category: "speaking", cefr: "B2", thai: "น่าหงุดหงิดใจ, น่าท้อแท้", def: "Causing feelings of annoyance, distress, or impatience.", ex: "Trying to figure out a complicated train schedule can be frustrating.", syn: "exasperating, aggravating, annoying" },
+      { id: 14, word: "harsh", ipa: "/hɑːʃ/", pos: "adj.", category: "speaking", cefr: "C1", thai: "รุนแรง, หยาบคาย, รุนแรงเกินไป", def: "Unpleasantly severe, rough, or cruel.", ex: "His feedback was quite harsh, but it helped me improve.", syn: "severe, stern, abrasive, stringent" },
+      { id: 15, word: "insult", ipa: "/ˈɪnsʌlt/", pos: "v. / n.", category: "speaking", cefr: "B2", thai: "ดูหมิ่น, สบประมาท, คำดูหมิ่น", def: "To speak to or treat someone with disrespect.", ex: "Showing the soles of your feet to others is an insult in some places.", syn: "affront, offend, disparage, slight" },
+      { id: 16, word: "major", ipa: "/ˈmeɪdʒər/", pos: "adj.", category: "speaking", cefr: "B2", thai: "หลัก, สำคัญมาก", def: "Important, serious, or significant.", ex: "Don't worry even if you make a minor mistake; it won't cause a major issue.", syn: "primary, chief, principal, main" },
+      { id: 17, word: "minor", ipa: "/ˈmaɪnər/", pos: "adj.", category: "speaking", cefr: "B2", thai: "เล็กน้อย, ไม่สำคัญ", def: "Lesser in importance, seriousness, or size.", ex: "Making a minor accent mistake is completely normal for learners.", syn: "trivial, slight, secondary, small" },
+      { id: 18, word: "native", ipa: "/ˈneɪtɪv/", pos: "adj. / n.", category: "speaking", cefr: "B2", thai: "โดยกำเนิด, ท้องถิ่น", def: "Associated with the place of one's birth.", ex: "She sounds like a native English speaker after living abroad for years.", syn: "indigenous, original, vernacular" },
+      { id: 19, word: "straightforward", ipa: "/ˌstreɪtˈfɔːwəd/", pos: "adj.", category: "speaking", cefr: "C1", thai: "ตรงไปตรงมา, เข้าใจง่าย", def: "Easy to understand; honest and frank.", ex: "In some cultures, being straightforward is frowned upon.", syn: "candid, direct, plain, uncomplicated" },
+
+      // Idioms (p. 63)
+      { id: 20, word: "When in Rome, do as the Romans do", ipa: "[idiom]", pos: "idiom", category: "idiom", cefr: "C1", thai: "เข้าเมืองตาหลิ่ว ต้องหลิ่วตาตาม", def: "Follow the local customs or traditions of a place you visit.", ex: "We took off our shoes at the entrance — when in Rome, do as the Romans do!", syn: "adapt to local customs, follow local etiquette" },
+      { id: 21, word: "like a fish out of water", ipa: "[idiom]", pos: "idiom", category: "idiom", cefr: "C1", thai: "รู้สึกอึดอัด/ไม่คุ้นเคยกับสถานที่ใหม่", def: "Feeling uncomfortable or out of place in a new environment.", ex: "Attending a traditional royal banquet made him feel like a fish out of water.", syn: "out of element, misplaced, uncomfortable" },
+      { id: 22, word: "culture shock", ipa: "[idiom]", pos: "idiom", category: "idiom", cefr: "B2", thai: "อาการตื่นวัฒนธรรม", def: "The feeling of disorientation experienced in a new culture.", ex: "Moving to Tokyo gave me culture shock during the first month.", syn: "cultural disorientation, transition anxiety" },
+      { id: 23, word: "lost in translation", ipa: "[idiom]", pos: "idiom", category: "idiom", cefr: "C1", thai: "คลาดเคลื่อน/ตกหล่นในการแปล", def: "Meaning or nuance is misunderstood between languages.", ex: "The humorous joke was lost in translation during the business meeting.", syn: "misunderstood, miscommunicated" },
+      { id: 24, word: "speak the same language", ipa: "[idiom]", pos: "idiom", category: "idiom", cefr: "C1", thai: "พูดภาษาเดียวกัน (มีความเห็นตรงกัน)", def: "Share similar views, values, or mutual understanding.", ex: "Even though we come from different nations, we speak the same language when it comes to music.", syn: "see eye to eye, share mutual understanding" },
+      { id: 25, word: "worlds apart", ipa: "[idiom]", pos: "idiom", category: "idiom", cefr: "C1", thai: "แตกต่างกันราวฟ้ากับดิน", def: "Be completely different in views, lifestyle, or culture.", ex: "Their perspectives on punctuality are worlds apart.", syn: "polar opposites, drastically different" },
+
+      // Reading (p. 64-65)
+      { id: 26, word: "aspect", ipa: "/ˈæspekt/", pos: "n.", category: "reading", cefr: "B2", thai: "แง่มุม, ด้าน", def: "A particular feature or component of a situation or problem.", ex: "Diversity is one of the most fascinating aspects of living in America.", syn: "facet, dimension, feature, side" },
+      { id: 27, word: "diverse", ipa: "/daɪˈvɜːs/", pos: "adj.", category: "reading", cefr: "B2", thai: "หลากหลาย, แตกต่างกัน", def: "Showing a great deal of variety; very different.", ex: "The student population on campus is culturally diverse.", syn: "varied, heterogeneous, assorted, manifold" },
+      { id: 28, word: "outgoing", ipa: "/ˌaʊtˈɡəʊɪŋ/", pos: "adj.", category: "reading", cefr: "B2", thai: "เข้าสังคมง่าย, เปิดเผย", def: "Friendly, energetic, and enjoying being with others.", ex: "American students are generally outgoing and join many clubs.", syn: "extroverted, sociable, friendly, genial" },
+      { id: 29, word: "pause", ipa: "/pɔːz/", pos: "v. / n.", category: "reading", cefr: "B2", thai: "หยุดชั่วคราว", def: "To make a temporary stop in action or speech.", ex: "She picked up the sign-up sheet but paused when she felt uncertain.", syn: "hesitate, halt, interrupt, break" },
+      { id: 30, word: "campus", ipa: "/ˈkæmpəs/", pos: "n.", category: "reading", cefr: "B1", thai: "บริเวณมหาวิทยาลัย/สถานศึกษา", def: "The grounds and buildings of a university or college.", ex: "The university campus features modern technology labs.", syn: "grounds, precinct, university site" },
+      { id: 31, word: "identity", ipa: "/aɪˈdentəti/", pos: "n.", category: "reading", cefr: "B2", thai: "อัตลักษณ์, ตัวตน", def: "Who someone is, or the qualities that make them unique.", ex: "Adapting to a new culture doesn't mean losing your personal identity.", syn: "individuality, selfhood, character" },
+      { id: 32, word: "overwhelm", ipa: "/ˌəʊvəˈwelm/", pos: "v.", category: "reading", cefr: "C1", thai: "ทำให้รู้สึกท่วมท้น/รับไม่ไหว", def: "To cause someone to feel overcome with strong emotions.", ex: "Moving to a new country can overwhelm you at first.", syn: "overpower, engulf, overburden, swamp" },
+      { id: 33, word: "reserved", ipa: "/rɪˈzɜːvd/", pos: "adj.", category: "reading", cefr: "B2", thai: "สงบเสงี่ยม, เก็บตัว", def: "Slow to reveal emotion or opinions; quiet and shy.", ex: "When I first arrived in America, I was pretty reserved.", syn: "reticent, introverted, bashful, quiet" },
+
+      // Writing (p. 66-67)
+      { id: 34, word: "approve", ipa: "/əˈpruːv/", pos: "v.", category: "writing", cefr: "B2", thai: "อนุมัติ, เห็นชอบ", def: "To accept or agree to something officially.", ex: "The elders approved of the new community guidelines.", syn: "endorse, sanction, favor, ratify" },
+      { id: 35, word: "disapprove", ipa: "/ˌdɪsəˈpruːv/", pos: "v.", category: "writing", cefr: "B2", thai: "ไม่เห็นด้วย, ไม่ยอมรับ", def: "To consider something wrong or unsatisfactory.", ex: "Many traditional societies disapprove of loud public arguments.", syn: "condemn, reject, object to, frown upon" },
+      { id: 36, word: "gesture", ipa: "/ˈdʒestʃər/", pos: "n. / v.", category: "writing", cefr: "B2", thai: "ท่าทาง, การแสดงออก", def: "A movement of the body or limbs to express an idea.", ex: "Nodding your head is a universal gesture of agreement.", syn: "signal, motion, sign, indication" },
+      { id: 37, word: "honor", ipa: "/ˈɒnər/", pos: "v. / n.", category: "writing", cefr: "B2", thai: "ให้เกียรติ, ยกย่อง", def: "To show high respect or regard for someone.", ex: "In Middle Eastern customs, guests must honor their host.", syn: "tribute, respect, venerate, esteem" },
+      { id: 38, word: "host", ipa: "/həʊst/", pos: "n.", category: "writing", cefr: "B1", thai: "เจ้าภาพ, ผู้ต้อนรับ", def: "A person who receives or entertains guests.", ex: "Always thank your host before leaving a dinner party.", syn: "entertainer, presenter, receiver" }
+    ];
+
+    // GRAMMAR DRILL DATA
+    const GRAMMAR_DISCOURSE_QUIZ = [
+      { q: "She loves traveling. ________, she enjoys learning foreign languages.", opts: ["However", "In addition", "By the way", "In other words"], ans: 1, exp: "'In addition' (นอกจากนี้) แสดงการเพิ่มเติมข้อมูลในทางเดียวกัน" },
+      { q: "The weather was extremely cold; ________, they decided to go hiking.", opts: ["furthermore", "however", "that is to say", "also"], ans: 1, exp: "'however' (อย่างไรก็ตาม) แสดงความขัดแย้งระหว่างสภาพอากาศหนาวกับการไปเดินป่า" },
+      { q: "He is a polyglot. ________, he can speak more than five languages fluently.", opts: ["In other words", "On the other hand", "Anyway", "By the way"], ans: 0, exp: "'In other words' (พูดอีกอย่างก็คือ) ใช้อธิบายความหมายของ polyglot (ผู้พูดได้หลายภาษา)" },
+      { q: "I need to turn in my homework today. ________, did you watch the match last night?", opts: ["In addition", "However", "By the way", "That is to say"], ans: 2, exp: "'By the way' (อย่างว่า/เปิดประเด็นใหม่) ใช้เปลี่ยนหัวข้อสนทนาอย่างกะทันหัน" },
+      { q: "Traveling broadens your perspective. ________, it helps you develop adaptability.", opts: ["However", "Furthermore", "In other words", "On the contrary"], ans: 1, exp: "'Furthermore' (ยิ่งไปกว่านั้น) ใช้อย่างเป็นทางการในการเสริมเหตุผลบวก" }
+    ];
+
+    const GRAMMAR_BARE_QUIZ = [
+      { q: "You had better ________ your passport before leaving for the airport.", opts: ["checking", "to check", "check", "checked"], ans: 2, exp: "'had better' ต้องตามด้วย Bare Infinitive (V.1 ไม่เติม to)" },
+      { q: "The teacher made all students ________ off their shoes before entering.", opts: ["take", "to take", "taking", "took"], ans: 0, exp: "Causative verb 'make someone do something' ต้องใช้ Bare Infinitive" },
+      { q: "I watched the airplane ________ gracefully into the sunset.", opts: ["to land", "land", "landed", "lands"], ans: 1, exp: "Perception verb 'watch someone/something do something' ใช้ Bare Infinitive" },
+      { q: "She would rather ________ at home than go to the loud party.", opts: ["staying", "to stay", "stay", "stayed"], ans: 2, exp: "'would rather' ต้องตามด้วย Bare Infinitive" },
+      { q: "Could you help me ________ these heavy suitcases upstairs?", opts: ["carry", "carried", "carrying", "to carrying"], ans: 0, exp: "Causative/Help verb 'help someone do something' ใช้ Bare Infinitive" }
+    ];
+
+    // READING COMPREHENSION QUIZ DATA
+    const READING_QUIZ_DATA = [
+      { type: "TF", q: "The narrator was outgoing and confident as soon as they arrived in America.", ans: "False", exp: "Paragraph 1 states the narrator was 'pretty reserved' when they first arrived." },
+      { type: "TF", q: "Amber had previously spent two years living and studying in Osaka, Japan.", ans: "True", exp: "Paragraph 3 explicitly mentions Amber spent two years studying abroad in Osaka." },
+      { type: "MC", q: "What does Amber mean when she says 'When in Rome, do as the Romans do'?", opts: ["Give up your national identity completely", "Be open to local customs and try unfamiliar things", "Never speak your native language again", "Only eat American fast food"], ans: "Be open to local customs and try unfamiliar things", exp: "Amber explains it means being open to how things are done and trying new things." },
+      { type: "MC", q: "Why did the narrator pause before signing up for the digital media club?", opts: ["The club fee was too expensive", "They felt overwhelmed and doubted their abilities", "Amber told them to join a different club", "The club was already full"], ans: "They felt overwhelmed and doubted their abilities", exp: "Paragraph 2 states: 'I started to feel overwhelmed. What if I wasn't good enough?'" },
+      { type: "MC", q: "What key realization did the narrator reach by the end of the text?", opts: ["Living abroad is too stressful to enjoy", "Adapting allows personal growth without losing identity", "You must master video editing before joining a club", "Only native speakers can feel confident"], ans: "Adapting allows personal growth without losing identity", exp: "Paragraph 4 & 5 state that adapting didn't mean losing identity, but growing more confident." }
+    ];
+
+    // EXAM SIMULATOR QUESTIONS DATA
+    const EXAM_QUESTIONS = [
+      {
+        q: "TGAT1 - Vocabulary in Context:\nThough she felt like a 'fish out of water' at the global forum, her ________ knowledge in international relations impressed the audience.",
+        opts: ["peculiar", "exceptional", "harsh", "minor"],
+        ans: 1,
+        exp: "คำตอบคือ 'exceptional' (ยอดเยี่ยม/โดดเด่น - CEFR C1) ซึ่งเหมาะกับบริบทที่น่าประทับใจ ('fish out of water' = รู้สึกไม่คุ้นเคย/เกร็ง)"
+      },
+      {
+        q: "TGAT1 - Conversation & Expressions:\nSpeaker A: 'I feel nervous about eating with chopsticks in Tokyo.'\nSpeaker B: 'Don't worry! ________. Just observe what others do.'",
+        opts: ["Lost in translation", "When in Rome, do as the Romans do", "Worlds apart", "Speak the same language"],
+        ans: 1,
+        exp: "สุภาษิต 'When in Rome, do as the Romans do' (เข้าเมืองตาหลิ่ว ต้องหลิ่วตาตาม - CEFR C1) ใช้แนะนำให้ทำตามธรรมเนียมท้องถิ่น"
+      },
+      {
+        q: "A-Level English - Discourse Markers:\n'The international exchange program offers rich cultural experience. ________, students can earn transferable academic credits.'",
+        opts: ["However", "Furthermore", "In other words", "By the way"],
+        ans: 1,
+        exp: "ใช้ 'Furthermore' (ยิ่งไปกว่านั้น - Addition) เพื่อเพิ่มผลประโยชน์เชิงบวกของโครงการแลกเปลี่ยน"
+      },
+      {
+        q: "A-Level English - Bare Infinitives:\n'To avoid cultural misunderstandings in Thailand, travelers had better ________ local customs carefully.'",
+        opts: ["studying", "to study", "study", "studied"],
+        ans: 2,
+        exp: "โครงสร้าง 'had better' ต้องตามด้วย Bare Infinitive (V.1 ไม่เติม to) คือ 'study'"
+      },
+      {
+        q: "TGAT1 - Causative Grammar:\n'The friendly club president made the international newcomer ________ welcomed and confident.'",
+        opts: ["feel", "to feel", "feeling", "felt"],
+        ans: 0,
+        exp: "Causative verb 'make + object + Bare Infinitive' ต้องใช้ 'feel'"
+      },
+      {
+        q: "A-Level English - Synonyms & Context:\nWhich word is the CLOSEST synonym to 'diverse' in the sentence: 'The student population is culturally diverse'?",
+        opts: ["strict", "varied", "reserved", "unfamiliar"],
+        ans: 1,
+        exp: "'diverse' (หลากหลาย - CEFR B2) มีความหมายตรงกับ 'varied' (หลากหลาย/แตกต่างกัน)"
+      },
+      {
+        q: "TGAT1 - Conversation & Idioms:\n'Despite coming from vastly different backgrounds, the two researchers ________ when discussing environmental sustainability.'",
+        opts: ["feel like a fish out of water", "are worlds apart", "speak the same language", "are lost in translation"],
+        ans: 2,
+        exp: "'speak the same language' (CEFR C1) เป็นสำนวนแปลว่า มีความเห็น/ความเข้าใจตรงกัน"
+      },
+      {
+        q: "A-Level English - Discourse Markers (Explanation):\n'He is a polyglot; ________, he can communicate fluently in five languages.'",
+        opts: ["however", "in other words", "by the way", "on the other hand"],
+        ans: 1,
+        exp: "'In other words' (กล่าวคือ/พูดอีกอย่างหนึ่ง) ใช้ขยายความอธิบายความหมายคำว่า polyglot"
+      },
+      {
+        q: "TGAT1 - Perception Verbs:\n'While sitting in the campus cafeteria, I noticed a student ________ traditional music on a lute.'",
+        opts: ["to play", "play", "played", "was playing"],
+        ans: 1,
+        exp: "Perception verb 'notice someone do something' สามารถตามด้วย Bare Infinitive 'play'"
+      },
+      {
+        q: "A-Level English - Reading Inference:\n'Adapting to a new culture requires openness without forfeiting one's identity.' Which statement aligns with this idea?",
+        opts: ["You must abandon your native culture entirely.", "Cultural adaptation is about growth, not losing who you are.", "Strict obedience is the only way to fit in.", "Culture shock cannot be overcome."],
+        ans: 1,
+        exp: "ตรงกับใจความสำคัญในบทอ่านที่ระบุว่า การปรับตัวคือการเรียนรู้สิ่งใหม่โดยไม่เสียความเป็นตัวเอง (identity)"
+      }
+    ];
+
+    // ==========================================
+    // 2. GLOBAL STATE & HELPERS
+    // ==========================================
+    let sfxEnabled = true;
+    let currentCategory = 'all';
+    let currentCefr = 'all';
+    let filteredVocab = [...VOCAB_DATA];
+    let currentVocabIndex = 0;
+    const masteredSet = new Set();
+
+    // WEB AUDIO SYNTHESIZER FOR SOUND EFFECTS
+    function playSFX(type) {
+      if (!sfxEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === 'click') {
+          osc.frequency.setValueAtTime(400, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.05);
+          gain.gain.setValueAtTime(0.15, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.05);
+        } else if (type === 'flip') {
+          osc.frequency.setValueAtTime(250, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(500, ctx.currentTime + 0.08);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.08);
+        } else if (type === 'correct') {
+          osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.08);
+          osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.16);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.3);
+        } else if (type === 'wrong') {
+          osc.frequency.setValueAtTime(300, ctx.currentTime);
+          osc.frequency.setValueAtTime(200, ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        }
+      } catch (e) {
+        console.log("Audio Context Error: ", e);
+      }
+    }
+
+    function toggleSFX() {
+      sfxEnabled = !sfxEnabled;
+      document.getElementById('sfx-icon').innerText = sfxEnabled ? '🔊' : '🔇';
+      document.getElementById('sfx-text').innerText = sfxEnabled ? 'Sound ON' : 'Sound OFF';
+      showToast(sfxEnabled ? 'Sound effects enabled' : 'Sound effects muted');
+    }
+
+    function showToast(msg) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto bg-slate-900 border border-indigo-500/50 text-indigo-200 px-4 py-2.5 rounded-xl shadow-xl text-xs font-semibold flex items-center space-x-2 transition-all duration-300 transform translate-y-2 opacity-0';
+      toast.innerHTML = `<span>ℹ️</span><span>${msg}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+
+    function switchTab(tabId) {
+      playSFX('click');
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+        btn.classList.add('text-slate-400', 'hover:text-slate-200');
+      });
+
+      const activeContent = document.getElementById(`mod-${tabId}`);
+      if (activeContent) activeContent.classList.remove('hidden');
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/30');
+        activeBtn.classList.remove('text-slate-400', 'hover:text-slate-200');
+      }
+    }
+
+    // ==========================================
+    // 3. FLASHCARD CONTROLS & LOGIC
+    // ==========================================
+    function flipCard() {
+      playSFX('flip');
+      const card = document.getElementById('flashcard');
+      card.classList.toggle('rotate-y-180');
+    }
+
+    function prevCard() {
+      if (filteredVocab.length === 0) return;
+      playSFX('click');
+      currentVocabIndex = (currentVocabIndex - 1 + filteredVocab.length) % filteredVocab.length;
+      updateFlashcardUI();
+    }
+
+    function nextCard() {
+      if (filteredVocab.length === 0) return;
+      playSFX('click');
+      currentVocabIndex = (currentVocabIndex + 1) % filteredVocab.length;
+      updateFlashcardUI();
+    }
+
+    function shuffleCards() {
+      playSFX('click');
+      for (let i = filteredVocab.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [filteredVocab[i], filteredVocab[j]] = [filteredVocab[j], filteredVocab[i]];
+      }
+      currentVocabIndex = 0;
+      updateFlashcardUI();
+      renderVocabDirectory();
+      showToast('🔀 Flashcard deck shuffled!');
+    }
+
+    function setVocabCategory(cat) {
+      playSFX('click');
+      currentCategory = cat;
+      document.querySelectorAll('.v-cat-btn').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.classList.add('bg-indigo-600', 'text-white');
+          btn.classList.remove('bg-slate-800', 'text-slate-400');
+        } else {
+          btn.classList.remove('bg-indigo-600', 'text-white');
+          btn.classList.add('bg-slate-800', 'text-slate-400');
+        }
+      });
+      filterVocab();
+    }
+
+    function getCefrBadgeClass(level) {
+      if (level === 'B1') return 'bg-emerald-950 text-emerald-300 border-emerald-800/50';
+      if (level === 'B2') return 'bg-sky-950 text-sky-300 border-sky-800/50';
+      if (level === 'C1') return 'bg-purple-950 text-purple-300 border-purple-800/50';
+      return 'bg-indigo-950 text-indigo-300 border-indigo-800/50';
+    }
+
+    function setCefrFilter(level) {
+      playSFX('click');
+      currentCefr = level;
+      document.querySelectorAll('.cefr-btn').forEach(btn => {
+        if (btn.dataset.cefr === level) {
+          btn.classList.add('bg-indigo-600', 'text-white');
+          btn.classList.remove('bg-slate-800', 'text-slate-400');
+        } else {
+          btn.classList.remove('bg-indigo-600', 'text-white');
+          btn.classList.add('bg-slate-800', 'text-slate-400');
+        }
+      });
+      filterVocab();
+    }
+
+    function filterVocab() {
+      const query = document.getElementById('vocab-search').value.toLowerCase();
+      filteredVocab = VOCAB_DATA.filter(item => {
+        const matchesCat = (currentCategory === 'all' || item.category === currentCategory);
+        const matchesCefr = (currentCefr === 'all' || item.cefr === currentCefr);
+        const matchesSearch = item.word.toLowerCase().includes(query) || 
+                              item.thai.includes(query) || 
+                              item.def.toLowerCase().includes(query);
+        return matchesCat && matchesCefr && matchesSearch;
+      });
+      currentVocabIndex = 0;
+      updateFlashcardUI();
+      renderVocabDirectory();
+    }
+
+    function updateFlashcardUI() {
+      if (filteredVocab.length === 0) {
+        document.getElementById('fc-word').innerText = "No word matches filter";
+        document.getElementById('fc-counter').innerText = "0 / 0";
+        return;
+      }
+      const item = filteredVocab[currentVocabIndex];
+      
+      document.getElementById('flashcard').classList.remove('rotate-y-180');
+      document.getElementById('fc-category').innerText = item.category.toUpperCase();
+      
+      const cefrBadge = document.getElementById('fc-cefr');
+      cefrBadge.innerText = item.cefr;
+      cefrBadge.className = `px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${getCefrBadgeClass(item.cefr)}`;
+
+      document.getElementById('fc-word').innerText = item.word;
+      document.getElementById('fc-pos').innerText = item.pos;
+      document.getElementById('fc-ipa').innerText = item.ipa;
+      document.getElementById('fc-counter').innerText = `${currentVocabIndex + 1} / ${filteredVocab.length}`;
+
+      document.getElementById('fc-back-thai').innerText = item.thai;
+      document.getElementById('fc-back-def').innerText = item.def;
+      document.getElementById('fc-back-syn').innerText = item.syn;
+      document.getElementById('fc-back-ex').innerText = `"${item.ex}"`;
+
+      const masterBtn = document.getElementById('fc-master-btn');
+      if (masteredSet.has(item.id)) {
+        masterBtn.classList.add('bg-emerald-600', 'text-white');
+        masterBtn.innerText = '✓ Mastered';
+      } else {
+        masterBtn.classList.remove('bg-emerald-600', 'text-white');
+        masterBtn.innerText = 'Mark Mastered';
+      }
+
+      updateMasteryProgress();
+    }
+
+    function renderVocabDirectory() {
+      const grid = document.getElementById('vocab-grid');
+      grid.innerHTML = '';
+      filteredVocab.forEach((item, idx) => {
+        const btn = document.createElement('button');
+        const isMastered = masteredSet.has(item.id);
+        btn.className = `p-2.5 rounded-xl border text-left text-xs transition flex flex-col justify-between ${idx === currentVocabIndex ? 'bg-indigo-950 border-indigo-500 text-indigo-200' : 'bg-slate-950 border-slate-800 hover:border-slate-700 text-slate-300'}`;
+        btn.onclick = () => {
+          playSFX('click');
+          currentVocabIndex = idx;
+          updateFlashcardUI();
+        };
+        btn.innerHTML = `
+          <div class="flex items-center justify-between w-full mb-1">
+            <span class="font-bold truncate">${item.word}</span>
+            <span class="px-1.5 py-0.2 rounded text-[9px] font-mono border ${getCefrBadgeClass(item.cefr)}">${item.cefr}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] text-slate-500 truncate">${item.thai}</span>
+            ${isMastered ? '<span class="text-emerald-400 text-[10px] ml-1">✓</span>' : ''}
+          </div>
+        `;
+        grid.appendChild(btn);
+      });
+    }
+
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function speakCurrentWord() {
+      if (filteredVocab.length === 0) return;
+      speakText(filteredVocab[currentVocabIndex].word);
+    }
+
+    function toggleMasteredCurrent() {
+      if (filteredVocab.length === 0) return;
+      playSFX('click');
+      const item = filteredVocab[currentVocabIndex];
+      if (masteredSet.has(item.id)) {
+        masteredSet.delete(item.id);
+        showToast(`Removed "${item.word}" from Mastered.`);
+      } else {
+        masteredSet.add(item.id);
+        showToast(`✨ Mark "${item.word}" as Mastered!`);
+      }
+      updateFlashcardUI();
+      renderVocabDirectory();
+    }
+
+    function updateMasteryProgress() {
+      const count = masteredSet.size;
+      const total = VOCAB_DATA.length;
+      const pct = Math.round((count / total) * 100);
+      document.getElementById('mastered-count').innerText = `${count} / ${total}`;
+      document.getElementById('mastered-bar').style.width = `${pct}%`;
+    }
+
+    // ==========================================
+    // 4. GRAMMAR ARENA LOGIC
+    // ==========================================
+    function switchGrammarTab(type) {
+      playSFX('click');
+      const dContent = document.getElementById('g-content-discourse');
+      const bContent = document.getElementById('g-content-bare');
+      const dSub = document.getElementById('g-sub-discourse');
+      const bSub = document.getElementById('g-sub-bare');
+
+      if (type === 'discourse') {
+        dContent.classList.remove('hidden');
+        bContent.classList.add('hidden');
+        dSub.className = 'pb-3 text-sm font-bold border-b-2 border-indigo-500 text-indigo-400 transition';
+        bSub.className = 'pb-3 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition';
+      } else {
+        dContent.classList.add('hidden');
+        bContent.classList.remove('hidden');
+        bSub.className = 'pb-3 text-sm font-bold border-b-2 border-purple-500 text-purple-400 transition';
+        dSub.className = 'pb-3 text-sm font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-200 transition';
+      }
+    }
+
+    function renderGrammarQuizzes() {
+      const dList = document.getElementById('quiz-discourse-list');
+      dList.innerHTML = '';
+      GRAMMAR_DISCOURSE_QUIZ.forEach((q, idx) => {
+        const item = document.createElement('div');
+        item.className = 'bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3';
+        item.innerHTML = `
+          <p class="text-xs sm:text-sm font-semibold text-slate-200">${idx + 1}. ${q.q}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${q.opts.map((opt, optIdx) => `
+              <button onclick="selectGrammarAns('discourse', ${idx}, ${optIdx})" class="g-d-opt-${idx} text-left p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:bg-slate-800 font-medium transition">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div id="g-d-exp-${idx}" class="hidden p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300"></div>
+        `;
+        dList.appendChild(item);
+      });
+
+      const bList = document.getElementById('quiz-bare-list');
+      bList.innerHTML = '';
+      GRAMMAR_BARE_QUIZ.forEach((q, idx) => {
+        const item = document.createElement('div');
+        item.className = 'bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3';
+        item.innerHTML = `
+          <p class="text-xs sm:text-sm font-semibold text-slate-200">${idx + 1}. ${q.q}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            ${q.opts.map((opt, optIdx) => `
+              <button onclick="selectGrammarAns('bare', ${idx}, ${optIdx})" class="g-b-opt-${idx} text-left p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:bg-slate-800 font-medium transition">
+                ${opt}
+              </button>
+            `).join('')}
+          </div>
+          <div id="g-b-exp-${idx}" class="hidden p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300"></div>
+        `;
+        bList.appendChild(item);
+      });
+    }
+
+    function selectGrammarAns(type, qIdx, optIdx) {
+      playSFX('click');
+      const quizData = type === 'discourse' ? GRAMMAR_DISCOURSE_QUIZ : GRAMMAR_BARE_QUIZ;
+      const q = quizData[qIdx];
+      const isCorrect = optIdx === q.ans;
+      const expDiv = document.getElementById(`g-${type === 'discourse' ? 'd' : 'b'}-exp-${qIdx}`);
+      
+      const prefix = type === 'discourse' ? 'g-d-opt' : 'g-b-opt';
+      document.querySelectorAll(`.${prefix}-${qIdx}`).forEach((b, i) => {
+        if (i === q.ans) {
+          b.className = `${prefix}-${qIdx} text-left p-2.5 rounded-lg bg-emerald-950 border border-emerald-500 text-emerald-200 font-medium text-xs`;
+        } else if (i === optIdx && !isCorrect) {
+          b.className = `${prefix}-${qIdx} text-left p-2.5 rounded-lg bg-rose-950 border border-rose-500 text-rose-200 font-medium text-xs`;
+        } else {
+          b.className = `${prefix}-${qIdx} text-left p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 font-medium text-xs opacity-50`;
+        }
+      });
+
+      expDiv.classList.remove('hidden');
+      if (isCorrect) {
+        playSFX('correct');
+        expDiv.innerHTML = `<span class="text-emerald-400 font-bold">✓ Correct!</span> ${q.exp}`;
+      } else {
+        playSFX('wrong');
+        expDiv.innerHTML = `<span class="text-rose-400 font-bold">✗ Incorrect.</span> ${q.exp}`;
+      }
+    }
+
+    // ==========================================
+    // 5. READING PASSAGE LOGIC
+    // ==========================================
+    function setupReadingVocabClicks() {
+      document.querySelectorAll('.rd-word').forEach(el => {
+        el.onclick = () => {
+          playSFX('click');
+          const targetWord = el.dataset.word.toLowerCase();
+          const match = VOCAB_DATA.find(v => v.word.toLowerCase() === targetWord);
+          
+          const modal = document.getElementById('reading-vocab-modal');
+          modal.classList.remove('hidden');
+          
+          const cefrModalBadge = document.getElementById('rd-modal-cefr');
+          if (match) {
+            document.getElementById('rd-modal-word').innerText = `${match.word} (${match.pos})`;
+            cefrModalBadge.innerText = match.cefr;
+            cefrModalBadge.className = `px-2 py-0.5 text-[10px] font-black rounded border ${getCefrBadgeClass(match.cefr)}`;
+            document.getElementById('rd-modal-thai').innerText = match.thai;
+            document.getElementById('rd-modal-def').innerText = match.def;
+          } else {
+            document.getElementById('rd-modal-word').innerText = targetWord;
+            cefrModalBadge.innerText = "C1";
+            cefrModalBadge.className = `px-2 py-0.5 text-[10px] font-black rounded border ${getCefrBadgeClass('C1')}`;
+            document.getElementById('rd-modal-thai').innerText = "สำนวน/คำศัพท์สำคัญ";
+            document.getElementById('rd-modal-def').innerText = "Cultural expression or key vocabulary phrase.";
+          }
+        };
+      });
+    }
+
+    function closeReadingVocabModal() {
+      document.getElementById('reading-vocab-modal').classList.add('hidden');
+    }
+
+    function speakReadingPassage() {
+      const text = document.getElementById('reading-text-body').innerText;
+      speakText(text);
+    }
+
+    function renderReadingQuiz() {
+      const container = document.getElementById('reading-quiz-container');
+      container.innerHTML = '';
+      READING_QUIZ_DATA.forEach((q, idx) => {
+        const item = document.createElement('div');
+        item.className = 'bg-slate-950 border border-slate-800 rounded-xl p-4 space-y-3';
+        
+        let optsHTML = '';
+        if (q.type === 'TF') {
+          optsHTML = `
+            <div class="flex space-x-2">
+              <button onclick="selectReadingAns(${idx}, 'True')" class="rd-q-btn-${idx} px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:bg-slate-800 w-1/2">True</button>
+              <button onclick="selectReadingAns(${idx}, 'False')" class="rd-q-btn-${idx} px-4 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:bg-slate-800 w-1/2">False</button>
+            </div>
+          `;
+        } else {
+          optsHTML = `
+            <div class="space-y-1.5">
+              ${q.opts.map(opt => `
+                <button onclick="selectReadingAns(${idx}, '${opt.replace(/'/g, "\\'")}')" class="rd-q-btn-${idx} w-full text-left p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 hover:bg-slate-800 font-medium">
+                  ${opt}
+                </button>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        item.innerHTML = `
+          <p class="text-xs font-semibold text-slate-200">${idx + 1}. ${q.q}</p>
+          ${optsHTML}
+          <div id="rd-exp-${idx}" class="hidden p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300 mt-2"></div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    const readingAnswers = {};
+    function selectReadingAns(qIdx, val) {
+      playSFX('click');
+      readingAnswers[qIdx] = val;
+      const btns = document.querySelectorAll(`.rd-q-btn-${qIdx}`);
+      btns.forEach(b => {
+        if (b.innerText.trim() === val) {
+          b.classList.add('bg-indigo-950', 'border-indigo-500', 'text-indigo-200');
+        } else {
+          b.classList.remove('bg-indigo-950', 'border-indigo-500', 'text-indigo-200');
+        }
+      });
+    }
+
+    function checkReadingQuiz() {
+      let score = 0;
+      READING_QUIZ_DATA.forEach((q, idx) => {
+        const selected = readingAnswers[idx];
+        const expDiv = document.getElementById(`rd-exp-${idx}`);
+        expDiv.classList.remove('hidden');
+        
+        if (selected === q.ans) {
+          score++;
+          expDiv.innerHTML = `<span class="text-emerald-400 font-bold">✓ Correct!</span> ${q.exp}`;
+        } else {
+          expDiv.innerHTML = `<span class="text-rose-400 font-bold">✗ Incorrect.</span> Correct answer: <strong>${q.ans}</strong>. ${q.exp}`;
+        }
+      });
+
+      if (score >= 4) playSFX('correct'); else playSFX('wrong');
+      showToast(`Reading Quiz Completed: ${score} / ${READING_QUIZ_DATA.length}`);
+    }
+
+    // ==========================================
+    // 6. EXAM SIMULATOR LOGIC
+    // ==========================================
+    let currentExamQIdx = 0;
+    let userExamAnswers = new Array(EXAM_QUESTIONS.length).fill(null);
+    let examTimerInterval = null;
+    let examSecondsLeft = 600;
+
+    function renderExamNav() {
+      const grid = document.getElementById('exam-nav-grid');
+      grid.innerHTML = '';
+      EXAM_QUESTIONS.forEach((_, idx) => {
+        const btn = document.createElement('button');
+        const isAnswered = userExamAnswers[idx] !== null;
+        const isCurrent = currentExamQIdx === idx;
+        btn.className = `h-9 w-full rounded-lg text-xs font-bold transition flex items-center justify-center ${isCurrent ? 'ring-2 ring-indigo-400' : ''} ${isAnswered ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`;
+        btn.innerText = idx + 1;
+        btn.onclick = () => {
+          playSFX('click');
+          currentExamQIdx = idx;
+          renderExamQuestion();
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function renderExamQuestion() {
+      const q = EXAM_QUESTIONS[currentExamQIdx];
+      const container = document.getElementById('exam-question-card');
+      
+      container.innerHTML = `
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-md bg-emerald-950 text-emerald-300 text-[10px] font-bold uppercase tracking-wider">Question ${currentExamQIdx + 1}</span>
+            <span class="text-xs text-slate-500 font-mono">TGAT1 / A-Level Standard</span>
+          </div>
+
+          <h4 class="text-sm sm:text-base font-semibold text-slate-100 leading-relaxed">${q.q.replace(/\n/g, '<br>')}</h4>
+
+          <div class="space-y-2.5 pt-2">
+            ${q.opts.map((opt, optIdx) => `
+              <button onclick="selectExamOpt(${optIdx})" class="w-full text-left p-3.5 rounded-xl border text-xs sm:text-sm font-medium transition flex items-center justify-between ${userExamAnswers[currentExamQIdx] === optIdx ? 'bg-indigo-950 border-indigo-500 text-indigo-100 shadow-md' : 'bg-slate-950 border-slate-800 text-slate-300 hover:bg-slate-800/80'}">
+                <div class="flex items-center space-x-3">
+                  <span class="w-6 h-6 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-xs font-bold ${userExamAnswers[currentExamQIdx] === optIdx ? 'bg-indigo-600 text-white border-indigo-400' : ''}">${String.fromCharCode(65 + optIdx)}</span>
+                  <span>${opt}</span>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      document.getElementById('exam-q-indicator').innerText = `Question ${currentExamQIdx + 1} of ${EXAM_QUESTIONS.length}`;
+      renderExamNav();
+    }
+
+    function selectExamOpt(optIdx) {
+      playSFX('click');
+      userExamAnswers[currentExamQIdx] = optIdx;
+      renderExamQuestion();
+    }
+
+    function prevExamQ() {
+      if (currentExamQIdx > 0) {
+        playSFX('click');
+        currentExamQIdx--;
+        renderExamQuestion();
+      }
+    }
+
+    function nextExamQ() {
+      if (currentExamQIdx < EXAM_QUESTIONS.length - 1) {
+        playSFX('click');
+        currentExamQIdx++;
+        renderExamQuestion();
+      }
+    }
+
+    function startExamTimer() {
+      playSFX('click');
+      if (examTimerInterval) clearInterval(examTimerInterval);
+      examSecondsLeft = 600;
+      document.getElementById('exam-start-btn').classList.add('hidden');
+      
+      examTimerInterval = setInterval(() => {
+        examSecondsLeft--;
+        const mins = Math.floor(examSecondsLeft / 60);
+        const secs = examSecondsLeft % 60;
+        document.getElementById('exam-timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+        if (examSecondsLeft <= 0) {
+          clearInterval(examTimerInterval);
+          submitExam();
+        }
+      }, 1000);
+
+      showToast('⏱️ Exam started! 10 minutes remaining.');
+    }
+
+    function submitExam() {
+      if (examTimerInterval) clearInterval(examTimerInterval);
+
+      let score = 0;
+      const expList = document.getElementById('exam-explanations-list');
+      expList.innerHTML = '';
+
+      EXAM_QUESTIONS.forEach((q, idx) => {
+        const userAns = userExamAnswers[idx];
+        const isCorrect = userAns === q.ans;
+        if (isCorrect) score++;
+
+        const item = document.createElement('div');
+        item.className = `p-3 rounded-xl border text-xs space-y-1 ${isCorrect ? 'bg-emerald-950/40 border-emerald-800/60' : 'bg-rose-950/40 border-rose-800/60'}`;
+        item.innerHTML = `
+          <div class="flex items-center justify-between font-bold">
+            <span class="${isCorrect ? 'text-emerald-400' : 'text-rose-400'}">Q${idx + 1}: ${isCorrect ? '✓ Correct' : '✗ Incorrect'}</span>
+            <span class="text-slate-400 text-[10px]">Your Ans: ${userAns !== null ? String.fromCharCode(65 + userAns) : 'None'} | Key: ${String.fromCharCode(65 + q.ans)}</span>
+          </div>
+          <p class="text-slate-300 font-medium">${q.q.split('\n')[0]}</p>
+          <p class="text-slate-400 italic text-[11px]">${q.exp}</p>
+        `;
+        expList.appendChild(item);
+      });
+
+      const pct = Math.round((score / EXAM_QUESTIONS.length) * 100);
+      document.getElementById('res-score').innerText = `${score} / 10`;
+      document.getElementById('res-percent').innerText = `${pct}%`;
+
+      let level = "Needs Improvement";
+      if (pct >= 80) level = "Excellent (TGAT 80+)";
+      else if (pct >= 60) level = "Good Pass (TGAT 65+)";
+      else if (pct >= 40) level = "Fair";
+      document.getElementById('res-level').innerText = level;
+
+      if (pct >= 60) playSFX('correct'); else playSFX('wrong');
+      document.getElementById('exam-result-modal').classList.remove('hidden');
+    }
+
+    function closeExamResultModal() {
+      document.getElementById('exam-result-modal').classList.add('hidden');
+    }
+
+    // ==========================================
+    // 7. WRITING STUDIO LOGIC
+    // ==========================================
+    function updateWritingPreview() {
+      const country = document.getElementById('w-country').value.trim() || 'Thailand';
+      const do1 = document.getElementById('w-do1').value.trim();
+      const do2 = document.getElementById('w-do2').value.trim();
+      const dont1 = document.getElementById('w-dont1').value.trim();
+      const dont2 = document.getElementById('w-dont2').value.trim();
+      const paragraph = document.getElementById('w-paragraph').value.trim();
+
+      document.getElementById('prev-title').innerText = `A Traveler's Guide to ${country}`;
+      
+      const body = document.getElementById('prev-body');
+      body.innerHTML = `
+        <p><strong>Cultural Guidelines for ${country}:</strong></p>
+        <ul class="list-disc pl-4 space-y-1 text-slate-300">
+          ${do1 ? `<li class="text-emerald-300">${do1}</li>` : ''}
+          ${do2 ? `<li class="text-emerald-300">${do2}</li>` : ''}
+          ${dont1 ? `<li class="text-rose-300">${dont1}</li>` : ''}
+          ${dont2 ? `<li class="text-rose-300">${dont2}</li>` : ''}
+        </ul>
+        ${paragraph ? `<p class="pt-2 border-t border-slate-800 text-slate-200">${paragraph}</p>` : ''}
+      `;
+
+      const fullText = `${do1} ${do2} ${dont1} ${dont2} ${paragraph}`.toLowerCase();
+      
+      const discourseMarkersList = ["in addition", "however", "furthermore", "on the other hand", "in other words", "by the way", "also", "although"];
+      const bareInfinitivePattern = /(must|should|had better|would rather|make|let|help|see|notice|hear)\s+([a-z]+)/i;
+
+      const hasDiscourse = discourseMarkersList.some(dm => fullText.includes(dm));
+      const hasBare = bareInfinitivePattern.test(fullText);
+
+      const chkDm = document.getElementById('chk-dm');
+      if (hasDiscourse) {
+        chkDm.className = 'flex items-center justify-between p-2 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300';
+        document.getElementById('chk-dm-icon').innerText = '✓';
+      } else {
+        chkDm.className = 'flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400';
+        document.getElementById('chk-dm-icon').innerText = '❌';
+      }
+
+      const chkBare = document.getElementById('chk-bare');
+      if (hasBare) {
+        chkBare.className = 'flex items-center justify-between p-2 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300';
+        document.getElementById('chk-bare-icon').innerText = '✓';
+      } else {
+        chkBare.className = 'flex items-center justify-between p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400';
+        document.getElementById('chk-bare-icon').innerText = '❌';
+      }
+    }
+
+    function copyWritingOutput() {
+      playSFX('click');
+      const country = document.getElementById('w-country').value.trim() || 'Thailand';
+      const do1 = document.getElementById('w-do1').value.trim();
+      const do2 = document.getElementById('w-do2').value.trim();
+      const dont1 = document.getElementById('w-dont1').value.trim();
+      const dont2 = document.getElementById('w-dont2').value.trim();
+      const paragraph = document.getElementById('w-paragraph').value.trim();
+
+      const output = `A Traveler's Guide to ${country}\n\nDOS:\n- ${do1}\n- ${do2}\n\nDON'TS:\n- ${dont1}\n- ${dont2}\n\nGENERAL ADVICE:\n${paragraph}`;
+
+      const dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = output;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+
+      showToast('📋 Guide copied to clipboard!');
+    }
+
+    // ==========================================
+    // 8. INITIALIZATION ON WINDOW LOAD
+    // ==========================================
+    window.onload = function() {
+      updateFlashcardUI();
+      renderVocabDirectory();
+      renderGrammarQuizzes();
+      setupReadingVocabClicks();
+      renderReadingQuiz();
+      renderExamQuestion();
+      updateWritingPreview();
+    };
+
+  </script>
+</body>
+</html>
